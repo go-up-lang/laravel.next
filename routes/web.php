@@ -18,3 +18,7 @@ Route::get('/', function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::post('/write', [WriteController::class, 'store'])
+                ->middleware('guest')
+                ->name('write');
