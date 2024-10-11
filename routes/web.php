@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Write;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +22,17 @@ Route::get('/', function () {
 
 require __DIR__.'/auth.php';
 
-Route::post('/write', function () {
-    return redirect('http://localhost:3000/dashboard');
+Route::post('/write', function (Request $request) {
+    $input = $request->validate([
+        'note' =>[
+            'required',
+            'string',
+            'max:255',
+        ],
+    ]);
+
+    $write = new Write();
+    $write->note = $input['note'];
+    //$write->user_id = Auth::id();
+    $write->save();
 });
