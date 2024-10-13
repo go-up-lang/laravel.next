@@ -30,9 +30,12 @@ Route::post('/write', function (Request $request) {
             'max:255',
         ],
     ]);
-
     $write = new Write();
     $write->note = $input['note'];
-    //$write->user_id = Auth::id();
+    $write->user_id = Auth::id();
     $write->save();
+});
+
+Route::get('/notes', function () {
+    return Write::all(); // JSON 응답 반환
 });
